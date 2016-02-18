@@ -1,4 +1,5 @@
 FROM ubuntu:14.04
+MAINTAINER Innovalangues
 RUN	echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise universe' >> /etc/apt/sources.list
 RUN	apt-get -y update
 
@@ -12,7 +13,7 @@ RUN	pip install --install-option="--prefix=/var/lib/graphite" --install-option="
 ADD	./nginx.conf /etc/nginx/nginx.conf
 ADD	./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# ADD graphite config
+# Add graphite config
 ADD	./initial_data.json /var/lib/graphite/webapp/graphite/initial_data.json
 ADD	./local_settings.py /var/lib/graphite/webapp/graphite/local_settings.py
 ADD	./carbon.conf /var/lib/graphite/conf/carbon.conf
