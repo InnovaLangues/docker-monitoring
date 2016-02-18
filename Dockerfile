@@ -4,7 +4,28 @@ RUN	echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise universe' >> /etc/apt
 RUN	apt-get -y update
 
 # Install required packages
-RUN	apt-get -y install python-ldap python-cairo python-django python-twisted python-django-tagging python-simplejson python-memcache python-pysqlite2 python-support python-pip gunicorn supervisor nginx-light
+RUN	apt-get -y install\
+  python-ldap\
+  python-cairo\
+  python-django\
+  python-twisted\
+  python-django-tagging\
+  python-simplejson\
+  python-memcache\
+  python-pysqlite2\
+  python-support\
+  python-pip\
+  python-tz\
+  gunicorn\
+  supervisor\
+  git\
+  nodejs\
+  nginx-light
+
+# Install statsd
+RUN git clone -b v0.7.2 --depth 1 https://github.com/etsy/statsd.git /opt/statsd
+ADD ./config.js /opt/statsd/config.js
+
 RUN	pip install whisper
 RUN	pip install --install-option="--prefix=/var/lib/graphite" --install-option="--install-lib=/var/lib/graphite/lib" carbon
 RUN	pip install --install-option="--prefix=/var/lib/graphite" --install-option="--install-lib=/var/lib/graphite/webapp" graphite-web
@@ -24,6 +45,10 @@ RUN	chown -R www-data /var/lib/graphite/storage
 RUN	chmod 0775 /var/lib/graphite/storage /var/lib/graphite/storage/whisper
 RUN	chmod 0664 /var/lib/graphite/storage/graphite.db
 RUN	cd /var/lib/graphite/webapp/graphite && python manage.py syncdb --noinput
+
+# Cleanup
+RUN apt-get clean\
+ && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Nginx
 EXPOSE	:80
