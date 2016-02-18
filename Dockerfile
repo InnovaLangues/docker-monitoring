@@ -20,6 +20,7 @@ RUN	apt-get -y install\
   supervisor\
   git\
   nodejs\
+  tcpdump\
   nginx-light
 
 # Install statsd
@@ -52,11 +53,21 @@ RUN apt-get clean\
 
 # Nginx
 EXPOSE	:80
+
 # Carbon line receiver port
 EXPOSE	:2003
+
 # Carbon pickle receiver port
 EXPOSE	:2004
+
 # Carbon cache query port
 EXPOSE	:7002
+
+# StatsD port
+EXPOSE        :8125/udp
+
+# StatsD admin port
+EXPOSE        :8126
+
 
 CMD	["/usr/bin/supervisord"]

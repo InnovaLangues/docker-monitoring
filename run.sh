@@ -1,1 +1,1 @@
-docker run -d --name monitoring --restart=always -v /data/graphite/storage/whisper:/var/lib/graphite/storage/whisper -p 81:80 -p 2003:2003 innovalangues/monitoring
+docker run -d --name monitoring --restart=always -v /data/graphite/storage/whisper:/var/lib/graphite/storage/whisper -p 81:80 -p 2003:2003 -p 2004:2004 -p 8125:8125/udp -p 8126:8126 innovalangues/monitoring
