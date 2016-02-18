@@ -1,10 +1,24 @@
+SECRET_KEY = 'a_salty_string'
 # Edit this file to override the default graphite settings, do not edit settings.py
 
 # Turn on debugging and restart apache if you ever see an "Internal Server Error" page
 #DEBUG = True
 
 # Set your local timezone (django will try to figure this out automatically)
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
+
+USE_REMOTE_USER_AUTHENTICATION = True
+
+DATABASES = {
+    'default': {
+        'NAME': 'graphite',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'graphite',
+        'PASSWORD': 'graphite',
+        'HOST': 'crash.innovalangues.net',
+        'PORT': '3306'
+    }
+}
 
 # Setting MEMCACHE_HOSTS to be empty will turn off use of memcached entirely
 #MEMCACHE_HOSTS = ['127.0.0.1:11211']

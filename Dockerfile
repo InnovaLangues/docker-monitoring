@@ -21,7 +21,8 @@ RUN	apt-get -y install\
   git\
   nodejs\
   tcpdump\
-  nginx-light
+  nginx-light\
+  python-mysqldb
 
 # Install statsd
 RUN git clone -b v0.7.2 --depth 1 https://github.com/etsy/statsd.git /opt/statsd
@@ -30,6 +31,7 @@ ADD ./config.js /opt/statsd/config.js
 RUN	pip install whisper
 RUN	pip install --install-option="--prefix=/var/lib/graphite" --install-option="--install-lib=/var/lib/graphite/lib" carbon
 RUN	pip install --install-option="--prefix=/var/lib/graphite" --install-option="--install-lib=/var/lib/graphite/webapp" graphite-web
+RUN pip install MySQL-python
 
 # Add system service config
 ADD	./nginx.conf /etc/nginx/nginx.conf
@@ -52,22 +54,22 @@ RUN apt-get clean\
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Nginx
-EXPOSE	:80
+EXPOSE :80
 
 # Carbon line receiver port
-EXPOSE	:2003
+EXPOSE :2003
 
 # Carbon pickle receiver port
-EXPOSE	:2004
+EXPOSE :2004
 
 # Carbon cache query port
-EXPOSE	:7002
+EXPOSE :7002
 
 # StatsD port
-EXPOSE        :8125/udp
+EXPOSE :8125/udp
 
 # StatsD admin port
-EXPOSE        :8126
+EXPOSE :8126
 
 
 CMD	["/usr/bin/supervisord"]
