@@ -9,7 +9,9 @@ host ports:
 - `7002`: the carbon-cache query port (used by the web interface)
 
 # Create host folers
+````bash
 sudo mkdir -p /data/graphite
+````
 
 # Setting host permissions
 ````bash
