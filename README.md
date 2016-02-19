@@ -8,6 +8,14 @@ host ports:
 - `2004`: the carbon-cache pickle receiver
 - `7002`: the carbon-cache query port (used by the web interface)
 
+# Create host folers
+sudo mkdir -p /data/graphite
+
+# Setting host permissions
+````bash
+sudo chown -R www-data:www-data /data/graphite
+````
+
 # Building the image
 cd into the folder then 
 
